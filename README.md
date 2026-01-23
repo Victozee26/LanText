@@ -36,6 +36,28 @@ node src/lan-chat.js
 
 Type messages and press Enter to broadcast to all devices on the LAN.
 
+#### Hybrid Mode (Recommended for Hotspot Networks)
+
+For networks where one device is a hotspot (e.g., Phone A is hotspot, Phone B connects via WiFi), use the hybrid mode which combines UDP broadcasting with TCP direct connections:
+
+```bash
+npm run chat:hybrid
+# or
+node src/lan-chat-hybrid.js
+```
+
+This mode works around hotspot gateway issues where UDP broadcast replies may not reach the client device.
+
+#### TCP-Only Mode
+
+For testing or extreme network isolation, force TCP-only mode:
+
+```bash
+npm run chat:tcp
+# or
+TCP_ONLY=true node src/lan-chat-hybrid.js
+```
+
 ### Clipboard Sync
 
 ```bash
