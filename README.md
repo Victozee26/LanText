@@ -1,4 +1,4 @@
-# LAN Chat
+# LanText
 
 A lightweight local area network chat application that enables real-time communication between WiFi-connected devices.
 
@@ -8,38 +8,67 @@ A lightweight local area network chat application that enables real-time communi
 - **Multiple clients**: Support for multiple simultaneous connections
 - **Hotspot mode**: WiFi hotspot devices can both host and participate in chat
 - **Real-time messaging**: Instant message delivery across the network
+- **Global CLI**: Install once, run anywhere with `lantext` command
 
 ## Installation
 
+### Global Installation (Recommended)
+
 ```bash
-npm install
+npm install -g lantext
+```
+
+### Local Installation
+
+```bash
+npm install lantext
 ```
 
 ## Usage
 
-### Start a Hotspot Server
+### Interactive Mode (Recommended)
+
+Simply run `lantext` and choose your mode:
 
 ```bash
-npm run hotspot
+lantext
 ```
 
-### Connect as a Client
+The CLI will ask you whether you want to be a **WiFi client** (connect to existing network) or **hotspot** (create server).
+
+### Direct Mode
+
+You can also specify the mode directly:
 
 ```bash
-npm run client
+# Connect as WiFi client
+lantext client
+# or
+lantext wifi
+
+# Start as hotspot server
+lantext hotspot
+# or
+lantext server
 ```
 
-### Run with Debug Mode
+### Debug Mode
 
 ```bash
-npm run dev
+DEBUG=true lantext client
+```
+
+### Connect to Specific Server
+
+```bash
+SERVER=192.168.1.5 lantext client
 ```
 
 ## Architecture
 
 - **Client** (`src/client.js`): Discovers and connects to a server on the network
 - **Hotspot** (`src/hotspot.js`): Runs both server and client for hotspot devices
-- **Main** (`src/main.js`): Entry point for the application
+- **Main** (`src/main.js`): CLI entry point with interactive mode
 
 ## Configuration
 

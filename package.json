@@ -1,18 +1,30 @@
 {
-  "name": "lan-chat",
+  "name": "lantext",
   "version": "1.0.0",
   "description": "A local area network chat application for WiFi devices",
   "main": "src/main.js",
+  "bin": {
+    "lantext": "./src/main.js"
+  },
   "scripts": {
     "start": "node src/main.js",
     "client": "node src/client.js",
     "hotspot": "node src/hotspot.js",
     "dev": "DEBUG=true node src/main.js"
   },
-  "keywords": ["chat", "lan", "network", "wifi"],
+  "keywords": ["chat", "lan", "network", "wifi", "cli"],
   "author": "",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victozee26/LanText.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Victozee26/LanText/issues"
+  },
+  "homepage": "https://github.com/Victozee26/LanText#readme",
+  "preferGlobal": true
 }
