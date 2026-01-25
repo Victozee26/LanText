@@ -3,7 +3,7 @@
 A lightweight local area network chat application that enables real-time communication between WiFi-connected devices.
 
 ## Why LanText Exists
-Sending a quick message from your phone to your laptop or to a colleague’s device is surprisingly complicated. Most solutions require WhatsApp, email, or cloud apps, which is overkill for a single text. LanText solves this by providing direct, local, real-time messaging with minimal setup.
+Sending a quick message from your phone to your laptop or to a colleague’s device is surprisingly frustrating. Most solutions require WhatsApp, Telegram, or cloud apps, which is overkill for a single text. LanText solves this by providing direct, local, real-time messaging with minimal setup.
 
 ## Features
 
