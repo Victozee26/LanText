@@ -1,5 +1,13 @@
 # LanText
 
+<p align="center">
+  <img
+    style="
+      border-radius: 16px;
+    "
+    src='asset/logo-1.jpeg' width='160'>
+</p>
+
 A lightweight local area network chat application that enables real-time communication between WiFi-connected devices.
 
 ## Why LanText Exists
