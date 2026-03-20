@@ -143,6 +143,7 @@ function connectToServer(address) {
 // Handle user input
 let rl = null;
 let messageBuffer = [];
+let pasteTimeout = null;
 
 if (process.stdin.isTTY) {
     rl = readline.createInterface({
@@ -151,27 +152,35 @@ if (process.stdin.isTTY) {
     });
 
     rl.on('line', (input) => {
-        // If user presses Enter on empty line and we have buffered content, send it
-        if (input.trim() === '' && messageBuffer.length > 0) {
-            const fullMessage = messageBuffer.join('\n');
-            if (connection) {
-                connection.write(fullMessage + '\n');
-                formatSent(fullMessage);
+        messageBuffer.push(input);
+
+        if (pasteTimeout) clearTimeout(pasteTimeout);
+
+        pasteTimeout = setTimeout(() => {
+            if (messageBuffer.length > 1 && messageBuffer[messageBuffer.length - 1].trim() === '') {
+                // Fast paste or explicit double-enter
+                while (messageBuffer.length > 0 && messageBuffer[messageBuffer.length - 1].trim() === '') {
+                    messageBuffer.pop();
+                }
+
+                if (messageBuffer.length > 0) {
+                    const fullMessage = messageBuffer.join('\n');
+                    if (connection) {
+                        connection.write(fullMessage + '\n');
+                        formatSent(fullMessage);
+                    }
+                }
+                messageBuffer = [];
+                rl.prompt();
+            } else if (messageBuffer.length === 1 && messageBuffer[0].trim() === '') {
+                // Empty input
+                messageBuffer = [];
+                rl.prompt();
+            } else {
+                // Active typing buffer
+                rl.prompt();
             }
-            messageBuffer = [];
-            rl.prompt();
-            return;
-        }
-
-        // Add non-empty input to buffer
-        if (input.trim() !== '') {
-            messageBuffer.push(input);
-            rl.prompt();
-            return;
-        }
-
-        // If buffer is empty and input is empty, just show prompt
-        rl.prompt();
+        }, 50);
     });
 } else {
     // For piped input, use traditional stdin handling

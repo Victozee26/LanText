@@ -157,6 +157,7 @@ server.on('error', (err) => {
 // Handle user input (our own messages)
 let rl = null;
 let messageBuffer = [];
+let pasteTimeout = null;
 
 if (process.stdin.isTTY) {
     rl = readline.createInterface({
@@ -165,24 +166,32 @@ if (process.stdin.isTTY) {
     });
 
     rl.on('line', (input) => {
-        // If user presses Enter on empty line and we have buffered content, send it
-        if (input.trim() === '' && messageBuffer.length > 0) {
-            const fullMessage = messageBuffer.join('\n');
-            sendOwnMessage(fullMessage);
-            messageBuffer = [];
-            rl.prompt();
-            return;
-        }
+        messageBuffer.push(input);
 
-        // Add non-empty input to buffer
-        if (input.trim() !== '') {
-            messageBuffer.push(input);
-            rl.prompt();
-            return;
-        }
+        if (pasteTimeout) clearTimeout(pasteTimeout);
 
-        // If buffer is empty and input is empty, just show prompt
-        rl.prompt();
+        pasteTimeout = setTimeout(() => {
+            if (messageBuffer.length > 1 && messageBuffer[messageBuffer.length - 1].trim() === '') {
+                // Fast paste or explicit double-enter
+                while (messageBuffer.length > 0 && messageBuffer[messageBuffer.length - 1].trim() === '') {
+                    messageBuffer.pop();
+                }
+
+                if (messageBuffer.length > 0) {
+                    const fullMessage = messageBuffer.join('\n');
+                    sendOwnMessage(fullMessage);
+                }
+                messageBuffer = [];
+                rl.prompt();
+            } else if (messageBuffer.length === 1 && messageBuffer[0].trim() === '') {
+                // Empty input
+                messageBuffer = [];
+                rl.prompt();
+            } else {
+                // Active typing buffer
+                rl.prompt();
+            }
+        }, 50);
     });
 } else {
     // For piped input, use traditional stdin handling
