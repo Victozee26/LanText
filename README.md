@@ -15,6 +15,7 @@ Sending a quick message from your phone to your laptop or to a colleague’s dev
 
 ## Features
 
+- **Beautiful Terminal UI**: Claude Code-inspired interface with rich colors, animated spinners, and an interactive select menu.
 - **Auto-discovery**: Automatically finds the chat server on the network
 - **Multiple clients**: Support for multiple simultaneous connections
 - **Hotspot mode**: WiFi hotspot devices can both host and participate in chat
@@ -72,15 +73,15 @@ LanText supports sending multiple lines of text as a single message. To send a m
 3. When done, press Enter again on an empty line to send the entire message
 
 **Example:**
-```
-> Line 1 of my message
-Line 2 of my message
-Line 3 of my message
-[SENT]:
-Line 1 of my message
-Line 2 of my message
-Line 3 of my message
->
+```text
+❯ Line 1 of my message
+❯ Line 2 of my message
+❯ Line 3 of my message
+  ✓ Sent  12:34:56
+  │ Line 1 of my message
+  │ Line 2 of my message
+  │ Line 3 of my message
+❯
 ```
 
 ### Debug Mode
@@ -100,6 +101,7 @@ SERVER=192.168.1.5 lantext client
 - **Client** (`src/client.js`): Discovers and connects to a server on the network
 - **Hotspot** (`src/hotspot.js`): Runs both server and client for hotspot devices
 - **Main** (`src/main.js`): CLI entry point with interactive mode
+- **UI** (`src/ui.js`): Shared UI module providing themed colors, formatted messages, boxed banners, and animated spinners
 
 ## Configuration
 
