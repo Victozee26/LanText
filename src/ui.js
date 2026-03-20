@@ -112,7 +112,9 @@ export function formatIncoming(envelope) {
   console.log();
   console.log(`  ${divider}`);
   console.log(`  ${sender}  ${ts}`);
-  console.log(`  ${envelope.text}`);
+  envelope.text.split('\n').forEach(line => {
+    console.log(`  ${line}`);
+  });
   console.log(`  ${divider}`);
 }
 
